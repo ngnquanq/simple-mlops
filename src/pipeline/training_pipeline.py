@@ -7,12 +7,12 @@ import logging
 import pandas as pd
 import numpy as np 
 
-@pipeline
+@pipeline(enable_cache=True)
 def training_pipeline(data_path: str):
     data = ingest_data(data_path=data_path)
-    cleaned_data = clean_data(data)
-    train_model(cleaned_data)
-    evaluate_model(cleaned_data)
+    clean_data(data)
+    train_model(data)
+    evaluate_model(data)
     
 if __name__=='__main__':
     training_pipeline()
