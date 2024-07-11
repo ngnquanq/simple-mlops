@@ -1,12 +1,17 @@
 import pandas as pd 
-import numpy as np 
-import pathlib 
+import numpy as np  
 import logging 
 from zenml import step 
+from typing import Tuple, Annotated
 from processing.preprocessing import DataPreProcessStrategy, DataDivideStrategy, DataCleaning
 
-@step
-def clean_data(df: pd.DataFrame) -> pd.DataFrame:
+@step()
+def clean_data(df: pd.DataFrame) -> Tuple[
+    Annotated[pd.DataFrame, 'X_train'],
+    Annotated[pd.DataFrame, 'X_valid'],
+    Annotated[pd.DataFrame, 'y_train'],
+    Annotated[pd.DataFrame, 'y_valid']
+]:
     try: 
         process_strategy = DataPreProcessStrategy()
         data_cleaning = DataCleaning(df, process_strategy)
@@ -14,9 +19,8 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
         
         divide_strategy = DataDivideStrategy()
         data_dividing = DataCleaning(cleaned_data, divide_strategy)
-        X_train, X_valid, y_train, y_valid = data_dividing.handle_data()
-        return X_train, X_valid, y_train, y_valid 
-        
+        dataframe = data_dividing.handle_data()
+        return dataframe
     except Exception as e:
         logging.error(f"Error cleaning data: {e}")
         raise e 

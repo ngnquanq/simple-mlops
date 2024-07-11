@@ -10,7 +10,15 @@ from sklearn.compose import make_column_selector
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 
+# Kinda useless ngl ._.
+# logging.basicConfig(filename='preprocessing.log',
+#                     filemode='a',
+#                     format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+#                     datefmt='%H:%M:%S',
+#                     level=logging.DEBUG)
+
 logger = logging.getLogger(__name__)
+
 
 # Abstract class is a strategy for handling data
 class DataStrategy(ABC):
@@ -108,7 +116,7 @@ class DataDivideStrategy(DataStrategy):
         Dataframe (pd.DataFrame): Take in the already encoded dataframe
     """
     
-    def handle_data(self, data) -> Union[pd.DataFrame|pd.Series]:
+    def handle_data(self, data) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
         data = pd.DataFrame(data)
         X = data.iloc[:, :-2]  # All columns except the last two
         y = data.iloc[:, -2:]  # The last two columns
