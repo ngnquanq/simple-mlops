@@ -23,9 +23,6 @@ class DataStrategy(ABC):
     def handle_data(self, data: pd.DataFrame) -> Union[pd.DataFrame, pd.Series]:
         pass 
     
-    @abstractmethod
-    def divide_data(self, data:pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]
-        pass
     
 class DataPreProcessStrategy(DataStrategy):
     """Inherit the datastrategy and overwrite the handle_data method provided by the DataStrategy above"""
@@ -43,7 +40,7 @@ class DataPreProcessStrategy(DataStrategy):
             data = data.drop(columns=[
                 "Account length", 
                 "State", 
-                "Area Code"
+                "Area code"
             ])
             logger.info("Delete useless columns complete")
         except Exception as e:
@@ -111,15 +108,16 @@ class DataDivideStrategy(DataStrategy):
         Dataframe (pd.DataFrame): Take in the already encoded dataframe
     """
     
-    def divide_data(self, data: pd.DataFrame, test_size: float = 0.2, random_state: int = 42) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    def handle_data(self, data) -> Union[pd.DataFrame|pd.Series]:
+        data = pd.DataFrame(data)
         X = data.iloc[:, :-2]  # All columns except the last two
         y = data.iloc[:, -2:]  # The last two columns
 
-        X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=test_size, random_state=random_state)
+        X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=42)
 
         return X_train, y_train, X_valid, y_valid
     
-class DataCleaning:
+class DataCleaning(DataStrategy):
     """
     Data cleaning class which preprocesses the data and divides it into train and test data.
     """
@@ -133,5 +131,3 @@ class DataCleaning:
         """Handle data based on the provided strategy"""
         return self.strategy.handle_data(self.df)
     
-    def divide_data(self): 
-        return self.strategy.divide_data(self.df)
