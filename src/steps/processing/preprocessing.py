@@ -106,6 +106,17 @@ class DataPreProcessStrategy(DataStrategy):
 
         encoded_data = preprocessor.fit_transform(data)
         
+        # Create new names
+        # Keep OG names for num_col
+        new_num_col = num_col
+        
+        # Change name for cat_col 
+        new_cat_col = preprocessor.named_transformers_['cat'].named_steps['OneHotEncoder'].get_feature_names_out(cat_col)
+        
+        # Combine to have new col names
+        columns = list(new_num_col) + list(new_cat_col)
+        
+        encoded_data = pd.DataFrame(encoded_data, columns=columns)
         return encoded_data
     
 
@@ -121,7 +132,7 @@ class DataDivideStrategy(DataStrategy):
         X = data.iloc[:, :-2]  # All columns except the last two
         y = data.iloc[:, -2:]  # The last two columns
 
-        X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=42)
+        X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=42, shuffle=False)
 
         return X_train, y_train, X_valid, y_valid
     
