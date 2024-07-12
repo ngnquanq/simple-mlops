@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import logging
+import optuna
 from sklearn.base import ClassifierMixin
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
@@ -19,6 +20,19 @@ class Model(ABC):
     def predict(self, X): 
         pass 
     
+    @abstractmethod
+    def optimize(self, trial: optuna.Trial, X_train, y_train, X_test, y_test): 
+        """Optimize the hyperparameter of the model[]
+
+        Args:
+            trial (Optuna Trial object): Optuna Trial object
+            X_train (ndarray): Training feature
+            y_train (ndarray): Training target
+            X_test (ndarray): Testing feature
+            y_test (ndarray): Testing target
+            
+        """
+        pass
 
 class LogisticRegressionClassification(Model): 
     def __init__(self, *args, **kwargs): 
@@ -37,6 +51,9 @@ class LogisticRegressionClassification(Model):
     def predict(self, X): 
         return self.model.predict(X)
     
+    def optimize(self, trial, X_train, y_train, X_test, y_test):
+        return super().optimize(trial, X_train, y_train, X_test, y_test)
+    
 
 class SVM(Model): 
     def __init__(self, *args, **kwargs): 
@@ -54,7 +71,8 @@ class SVM(Model):
     
     def predict(self, X): 
         return self.model.predict(X)
-    
+
+    def optimize(self, )    
 
 class RandomForest(Model): 
     def __init__(self, *args, **kwargs): 
@@ -72,3 +90,26 @@ class RandomForest(Model):
     
     def predict(self, X): 
         return self.model.predict(X)
+    
+    def optimize(self, trial: optuna.Trial, X_train, y_train, X_test, y_test):
+        n_estimators = trial.suggest_int("")
+        
+class HyperparameterTuner: 
+    """
+    Class for perming hyperparameter tuning using Optuna based on Model Strategy
+    """
+    
+    def __init__(self, model: Model, X_train, y_train, X_test, y_test ):
+        self.model = model 
+        self.X_train = X_train
+        self.y_train = y_train
+        self.X_test = X_test
+        self.y_test = y_test
+        
+    def optimize(self, n_trials = 100): 
+        study = optuna.create_study(direction='maximize')
+        study.optimize(lambda trial: self.model.optimize(trial, self.X_train, self.y_train, 
+                                                         self.X_test, self.y_test), 
+                                                         n_trials = n_trials)
+        return study.best_trial.params
+        
