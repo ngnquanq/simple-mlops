@@ -39,7 +39,7 @@ class LogisticRegressionClassification(Model):
         super().__init__(*args, **kwargs)
         self.model = LogisticRegression(*args, **kwargs)
     
-    def fit(self, X, y): 
+    def fit(self, X, y) -> ClassifierMixin:  
         try: 
             self.model.fit(X, y)
             logger.info(f"Model {self.__class__.__name__} trained successfully")
@@ -60,7 +60,7 @@ class SVM(Model):
         super().__init__(*args, **kwargs) 
         self.model = SVC(*args, **kwargs)
     
-    def fit(self, X, y): 
+    def fit(self, X, y) -> ClassifierMixin: 
         try:    
             self.model.fit(X, y)
             logger.info(f"Model {self.__class__.__name__} trained successfully")
@@ -72,14 +72,14 @@ class SVM(Model):
     def predict(self, X): 
         return self.model.predict(X)
 
-    def optimize(self, )    
+        
 
 class RandomForest(Model): 
     def __init__(self, *args, **kwargs): 
         super().__init__(*args, **kwargs)
         self.model = RandomForestClassifier(*args, **kwargs)
     
-    def fit(self, X, y):
+    def fit(self, X, y) -> ClassifierMixin:
         try: 
             self.model.fit(X, y)
             logger.info(f"Model {self.__class__.__name__} trained successfully")
