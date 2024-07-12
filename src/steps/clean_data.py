@@ -3,7 +3,7 @@ import numpy as np
 import logging 
 from zenml import step 
 from typing import Tuple, Annotated
-from processing.preprocessing import DataPreProcessStrategy, DataDivideStrategy, DataCleaning
+from .processing.preprocessing import DataPreProcessStrategy, DataDivideStrategy, DataCleaning
 
 @step()
 def clean_data(df: pd.DataFrame) -> Tuple[

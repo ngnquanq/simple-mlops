@@ -40,7 +40,7 @@ class LogisticRegressionClassification(Model):
 
 class SVM(Model): 
     def __init__(self, *args, **kwargs): 
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs) 
         self.model = SVC(*args, **kwargs)
     
     def fit(self, X, y): 
