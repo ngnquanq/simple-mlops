@@ -2,7 +2,7 @@ from zenml import step
 import pandas as pd
 import logging 
 from typing import Union, Tuple, Annotated
-from models.evaluate_model import *
+from .models.evaluate_model import *
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 logging.basicConfig(filename='logs/evaluate.log')
