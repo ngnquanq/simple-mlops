@@ -5,7 +5,7 @@ import pandas as pd
 
 # Initialize logger
 logger = logging.getLogger(__name__)
-logging.basicConfig(filenamm='app.log',level=logging.INFO)
+logging.basicConfig(filename='logs/ingest_data.log',level=logging.INFO)
 
 class IngestData:
     def __init__(self, data_path:str) -> None:
