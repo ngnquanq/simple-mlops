@@ -2,7 +2,7 @@ import logging
 from abc import ABC, abstractmethod
 import numpy as np 
 import pandas as pd 
-from typing import Union, Tuple
+from typing import Union, Tuple, Annotated
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
@@ -127,14 +127,22 @@ class DataDivideStrategy(DataStrategy):
         Dataframe (pd.DataFrame): Take in the already encoded dataframe
     """
     
-    def handle_data(self, data) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+    def handle_data(self, data) -> Tuple[Annotated[pd.DataFrame, 'X_train'],
+                                         Annotated[pd.DataFrame, 'X_test'],
+                                         Annotated[pd.DataFrame, 'y_train'],
+                                         Annotated[pd.DataFrame, 'y_test']]:
         data = pd.DataFrame(data)
         X = data.iloc[:, :-2]  # All columns except the last two
         y = data.iloc[:, -2:]  # The last two columns
 
+        # Convert one-hot encoded y to label encoding
+        y = y.idxmax(axis=1).to_frame(name='Churn_0.0')
+        
+        # Splitting the data using train test split
         X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=42, shuffle=False)
+        
 
-        return X_train, y_train, X_valid, y_valid
+        return X_train, X_valid, y_train, y_valid
     
 class DataCleaning(DataStrategy):
     """

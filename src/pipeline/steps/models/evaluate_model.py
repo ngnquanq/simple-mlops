@@ -29,7 +29,7 @@ class ConfusionMatrix(Evaluation):
             if isinstance(y_pred, (pd.DataFrame, pd.Series)):
                 y_pred = y_pred.to_numpy().ravel()
             logger.info('Calculating Confusion matrix')
-            cm = confusion_matrix(y_true=y_true.argmax(axis=1), y_pred=y_pred.argmax(axis=1))
+            cm = confusion_matrix(y_true=y_true, y_pred=y_pred)
             logger.info('Calculate confusion matrix complete')
             return {'Confusion matrix': cm}
         except Exception as e: 
