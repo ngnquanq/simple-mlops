@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 experiment_tracker = Client().active_stack.experiment_tracker
 
-@step(experiment_tracker=experiment_tracker)
+@step(experiment_tracker=experiment_tracker.name)
 def evaluate_model(
     model: ClassifierMixin,
     feature: Union[pd.DataFrame , pd.Series , np.ndarray],
