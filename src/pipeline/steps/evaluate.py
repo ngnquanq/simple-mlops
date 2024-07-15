@@ -27,5 +27,6 @@ def evaluate_model(
 
     metric_class = ClassificationMetrics()
     metrics = metric_class.calculate_score(y_true=target, y_pred=prediction)
+    mlflow.log_metrics(**metrics)
     
     return cm, metrics
