@@ -4,11 +4,15 @@ import logging
 from typing import Union, Tuple, Annotated
 from .models.evaluate_model import *
 from sklearn.base import BaseEstimator, ClassifierMixin
+import mlflow
+from zenml.client import Client 
 
 logging.basicConfig(filename='logs/evaluate.log')
 logger = logging.getLogger(__name__)
 
-@step
+experiment_tracker = Client().active_stack.experiment_tracker
+
+@step(experiment_tracker=experiment_tracker.name)
 def evaluate_model(
     model: ClassifierMixin,
     feature: Union[pd.DataFrame | pd.Series | np.ndarray],
