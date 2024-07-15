@@ -1,0 +1,38 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.10.0
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.4.2
+mlflow_version: 2.10.2
+model_size_bytes: 1292
+model_uuid: eb0f181657bb42aaa291843135760dcc
+run_id: 7e61cae16d904b5d8bff405372d8eb61
+signature:
+  inputs: '[{"type": "double", "name": "Number vmail messages", "required": true},
+    {"type": "double", "name": "Total day minutes", "required": true}, {"type": "double",
+    "name": "Total day calls", "required": true}, {"type": "double", "name": "Total
+    day charge", "required": true}, {"type": "double", "name": "Total eve minutes",
+    "required": true}, {"type": "double", "name": "Total eve calls", "required": true},
+    {"type": "double", "name": "Total eve charge", "required": true}, {"type": "double",
+    "name": "Total night minutes", "required": true}, {"type": "double", "name": "Total
+    night calls", "required": true}, {"type": "double", "name": "Total night charge",
+    "required": true}, {"type": "double", "name": "Total intl minutes", "required":
+    true}, {"type": "double", "name": "Total intl calls", "required": true}, {"type":
+    "double", "name": "Total intl charge", "required": true}, {"type": "double", "name":
+    "Customer service calls", "required": true}, {"type": "double", "name": "International
+    plan_No", "required": true}, {"type": "double", "name": "International plan_Yes",
+    "required": true}, {"type": "double", "name": "Voice mail plan_No", "required":
+    true}, {"type": "double", "name": "Voice mail plan_Yes", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "object", "shape": [-1]}}]'
+  params: null
+utc_time_created: '2024-07-15 10:15:02.347208'

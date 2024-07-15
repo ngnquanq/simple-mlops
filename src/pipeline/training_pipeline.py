@@ -9,7 +9,7 @@ import logging
 import pandas as pd
 import numpy as np 
 
-@pipeline(enable_cache=False)
+@pipeline(enable_cache=True)
 def training_pipeline(data_path: str):
     data = ingest_data(data_path=data_path)
     X_train, X_valid, y_train, y_valid = clean_data(data)

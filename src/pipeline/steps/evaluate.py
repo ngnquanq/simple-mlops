@@ -12,11 +12,11 @@ logger = logging.getLogger(__name__)
 
 experiment_tracker = Client().active_stack.experiment_tracker
 
-@step(experiment_tracker=experiment_tracker.name)
+@step(experiment_tracker=experiment_tracker)
 def evaluate_model(
     model: ClassifierMixin,
-    feature: Union[pd.DataFrame | pd.Series | np.ndarray],
-    target: Union[pd.DataFrame | pd.Series] | np.ndarray
+    feature: Union[pd.DataFrame , pd.Series , np.ndarray],
+    target: Union[pd.DataFrame , pd.Series , np.ndarray]
     ) -> Tuple[
         Annotated[dict, "Confusion matrix"] ,
         Annotated[dict, "Other metrics"]
@@ -24,9 +24,11 @@ def evaluate_model(
     prediction = model.predict(feature)
     cm_class = ConfusionMatrix()
     cm = cm_class.calculate_score(y_true=target, y_pred=prediction)
+    #mlflow.log_metrics(metrics=cm)
 
     metric_class = ClassificationMetrics()
     metrics = metric_class.calculate_score(y_true=target, y_pred=prediction)
-    mlflow.log_metrics(**metrics)
+    mlflow.log_metrics(metrics=metrics)
     
     return cm, metrics
+

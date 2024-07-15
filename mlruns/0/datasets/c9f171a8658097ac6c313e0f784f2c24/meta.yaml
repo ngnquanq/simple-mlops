@@ -1,0 +1,22 @@
+digest: '15549700'
+name: dataset
+profile: '{"num_rows": 667, "num_elements": 12006}'
+schema: '{"mlflow_colspec": [{"type": "double", "name": "Number vmail messages", "required":
+  true}, {"type": "double", "name": "Total day minutes", "required": true}, {"type":
+  "double", "name": "Total day calls", "required": true}, {"type": "double", "name":
+  "Total day charge", "required": true}, {"type": "double", "name": "Total eve minutes",
+  "required": true}, {"type": "double", "name": "Total eve calls", "required": true},
+  {"type": "double", "name": "Total eve charge", "required": true}, {"type": "double",
+  "name": "Total night minutes", "required": true}, {"type": "double", "name": "Total
+  night calls", "required": true}, {"type": "double", "name": "Total night charge",
+  "required": true}, {"type": "double", "name": "Total intl minutes", "required":
+  true}, {"type": "double", "name": "Total intl calls", "required": true}, {"type":
+  "double", "name": "Total intl charge", "required": true}, {"type": "double", "name":
+  "Customer service calls", "required": true}, {"type": "double", "name": "International
+  plan_No", "required": true}, {"type": "double", "name": "International plan_Yes",
+  "required": true}, {"type": "double", "name": "Voice mail plan_No", "required":
+  true}, {"type": "double", "name": "Voice mail plan_Yes", "required": true}]}'
+source: '{"tags": {"mlflow.user": "lenovo", "mlflow.source.name": "c:/Users/lenovo/OneDrive
+  - Cong ty co phan Format Vietnam JSC/Desktop/simple-mlops/src/run_pipeline.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "8f0aa6d61a1fba8ffce20fdbe9b2ebda90a9ba28"}}'
+source_type: code

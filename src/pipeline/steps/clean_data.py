@@ -26,6 +26,6 @@ def clean_data(df: pd.DataFrame) -> Tuple[
         raise e 
 
 if __name__=='__main__':
-    df = pd.read_csv('../../data/telecom_churn.csv')
+    df = pd.read_csv('../../data/raw/telecom_churn.csv')
     X_train, X_valid, y_train, y_valid = clean_data(df)
     print(X_train.shape, X_valid.shape, y_train.shape, y_valid.shape)

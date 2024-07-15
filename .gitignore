@@ -90,3 +90,6 @@ target/
 
 # Keys
 secret.json
+
+# zen 
+/notebooks/.zen

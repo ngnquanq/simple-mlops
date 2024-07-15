@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 experiment_tracker = Client().active_stack.experiment_tracker
 
-@step(experiment_tracker=experiment_tracker.name)
+@step(experiment_tracker=experiment_tracker)
 def train_model(
     X_train: pd.DataFrame, 
     y_train: pd.DataFrame, 
@@ -31,8 +31,7 @@ def train_model(
         model = SVM()
     logger.info('The selected model is: {}'.format(config))
     
-    with mlflow.start_run() as run: 
-        trained_model = model.fit(X_train, y_train)
+    trained_model = model.fit(X_train, y_train)
         
     logger.info('Training the model completed.')
     
