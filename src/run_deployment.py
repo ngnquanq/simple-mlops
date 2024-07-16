@@ -13,6 +13,9 @@ from zenml.integrations.mlflow.model_deployers.mlflow_model_deployer import (
     MLFlowModelDeployer,
 )
 from zenml.integrations.mlflow.services import MLFlowDeploymentService
+import logging
+
+logger = logging.getLogger(__name__)
 
 DEPLOY = 'deploy'
 PREDICT = 'predict'
@@ -63,6 +66,7 @@ def run_deployment(config: str, min_accuracy: float):
     )
     
     if existing_services:
+        logger.info('Exist services inside the local machine')
         service = cast(MLFlowDeploymentService, existing_services[0])
         if service.is_running:
             print(

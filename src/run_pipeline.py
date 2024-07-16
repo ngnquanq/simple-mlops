@@ -20,11 +20,11 @@ from zenml.client import Client
 
 @click.option(
     "--min-accuracy", 
-    default = 0.80,
+    default = 0.99,
     help="Minimum accuracy required to deploy the model"
 )
 
-def run_deployment(confi: str, min_accuracy):
+def run_deployment(config: str, min_accuracy):
     pass 
 
 if __name__=='__main__':
