@@ -29,4 +29,4 @@ def run_deployment(confi: str, min_accuracy):
 
 if __name__=='__main__':
     print(Client().active_stack.experiment_tracker.get_tracking_uri())
-    training_pipeline(data_path=r'C:\Users\lenovo\OneDrive - Cong ty co phan Format Vietnam JSC\Desktop\simple-mlops\data\raw\telecom_churn.csv') 
+    training_pipeline(data_path=r'C:\Users\lenovo\OneDrive - Cong ty co phan Format Vietnam JSC\Desktop\simple-mlops\data\telecom_churn.csv') 

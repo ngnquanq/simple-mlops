@@ -18,8 +18,8 @@ def evaluate_model(
     feature: Union[pd.DataFrame , pd.Series , np.ndarray],
     target: Union[pd.DataFrame , pd.Series , np.ndarray]
     ) -> Tuple[
-        Annotated[dict, "Confusion matrix"] ,
-        Annotated[dict, "Other metrics"]
+        Annotated[dict[str, np.ndarray], "Confusion matrix"] ,
+        Annotated[dict[str, float], "Other metrics"]
         ]: 
     prediction = model.predict(feature)
     cm_class = ConfusionMatrix()

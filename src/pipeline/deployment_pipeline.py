@@ -19,10 +19,14 @@ from zenml.integrations.mlflow.steps import mlflow_model_deployer_step
 from zenml.steps import BaseParameters, Output
 
 docker_settings = DockerSettings(required_integrations=[MLFLOW])
-data_path = '../../data/telecom_churn.csv'
+data_path = r'C:\Users\lenovo\OneDrive - Cong ty co phan Format Vietnam JSC\Desktop\simple-mlops\data\telecom_churn.csv'
 
 class DeploymentTriggerConfig(BaseParameters):
     min_accuracy: float=0.8
+    
+@step 
+def get_metrics(target: dict ,metric: str = 'accuracy'):
+    return target[metric]
     
 @step
 def deployment_trigger(
@@ -38,8 +42,7 @@ def deployment_trigger(
     """
     return accuracy >= config.min_accuracy
 
-@pipeline(enable_cache=True, 
-          settings={"docker_settings": docker_settings})
+@pipeline(enable_cache=True, settings={"docker": docker_settings})
 def continuos_deployment_pipeline(
     min_accuracy: float = 0.8,
     workers: int = 1,
@@ -50,11 +53,13 @@ def continuos_deployment_pipeline(
     trained_model = train_model(X_train = X_train, y_train = y_train, config = 'LogisticRegression')
     _, metrics = evaluate_model(trained_model, X_valid, y_valid)
     
+    # Import the get_metrics step
+    model_acc = get_metrics(target=metrics, metric='accuracy')
     # Create the deployment trigger
-    deployment_decision = deployment_trigger(accuracy = metrics['accuracy'])
+    deployment_decision = deployment_trigger(accuracy = model_acc)
     mlflow_model_deployer_step(
         model = trained_model, 
-        deployment_decision = deployment_decision,
+        deploy_decision = deployment_decision,
         workers = workers, 
         timeout = timeout
     )
