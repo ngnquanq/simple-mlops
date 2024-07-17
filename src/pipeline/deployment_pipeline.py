@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 # Setting basic docker and data path
 docker_settings = DockerSettings(required_integrations=[MLFLOW])
-data_path = r'C:\Users\lenovo\OneDrive - Cong ty co phan Format Vietnam JSC\Desktop\simple-mlops\data\telecom_churn.csv'
+data_path = r'/home/ngnqaq/project/simple-mlops/data/telecom_churn.csv'
 
 
 # Adjust the Deployment Trigger Config
