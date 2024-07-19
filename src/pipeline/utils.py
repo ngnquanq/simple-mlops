@@ -24,7 +24,7 @@ def get_data_columns():
         data_cleaning = DataCleaning(data, preprocess_strategy)
         data = data_cleaning.handle_data()
         data.drop(['Churn_0.0', 'Churn_1.0'], axis=1, inplace=True)
-        return data.
+        return data.columns.tolist()
     except Exception as e: 
         logging.error(e)
         raise e
