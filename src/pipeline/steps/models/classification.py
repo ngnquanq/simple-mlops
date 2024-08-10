@@ -5,10 +5,13 @@ from sklearn.base import ClassifierMixin
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
+import torch
+import torch.nn as nn
 
 logging.basicConfig(filename='logs/createModel.log')
 logger = logging.getLogger(__name__)
 
+# ================================================ Machine Learning Model with SKLearn =======================================
 class Model(ABC): 
     def __init__(self, *args, **kwargs): 
         pass 
@@ -95,6 +98,58 @@ class RandomForest(Model):
     def optimize(self, trial: optuna.Trial, X_train, y_train, X_test, y_test):
         n_estimators = trial.suggest_int("")
         
+
+# =============================================== Deep Learning Model with PyTorch ============================================
+class ClassificationModel(ABC, nn.Module):
+    def __init__(self):
+        super(ClassificationModel, self).__init__()
+
+    @abstractmethod
+    def forward(self, x):
+        """
+        Forward pass of the model.
+        """
+        pass
+
+    @abstractmethod
+    def train_model(self, dataloader, criterion, optimizer, num_epochs):
+        """
+        Method to train the model.
+        """
+        pass
+
+    @abstractmethod
+    def evaluate_model(self, dataloader, criterion):
+        """
+        Method to evaluate the model.
+        """
+        pass
+
+    @abstractmethod
+    def predict(self, x):
+        """
+        Method to make predictions.
+        """
+        pass
+
+    def save_model(self, path):
+        """
+        Save the model to a file.
+        """
+        torch.save(self.state_dict(), path)
+
+    def load_model(self, path):
+        """
+        Load the model from a file.
+        """
+        self.load_state_dict(torch.load(path))
+
+
+class SimpleMLP(ClassificationModel): 
+    def __init__(self, *args, **kwargs): 
+        super().__init__(*args, **kwargs)
+        self.model = None
+# ================================================== Parameter Tuning =========================================================
 class HyperparameterTuner: 
     """
     Class for perming hyperparameter tuning using Optuna based on Model Strategy
