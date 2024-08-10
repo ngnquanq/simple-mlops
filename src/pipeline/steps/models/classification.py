@@ -7,6 +7,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 import torch
 import torch.nn as nn
+from torch_geometric.nn import GCNConv
 
 logging.basicConfig(filename='logs/createModel.log')
 logger = logging.getLogger(__name__)
@@ -145,10 +146,6 @@ class ClassificationModel(ABC, nn.Module):
         self.load_state_dict(torch.load(path))
 
 
-class SimpleMLP(ClassificationModel): 
-    def __init__(self, *args, **kwargs): 
-        super().__init__(*args, **kwargs)
-        self.model = None
 # ================================================== Parameter Tuning =========================================================
 class HyperparameterTuner: 
     """
@@ -168,4 +165,26 @@ class HyperparameterTuner:
                                                          self.X_test, self.y_test), 
                                                          n_trials = n_trials)
         return study.best_trial.params
+
+# =============================== PyTorch Deep Learning Model ====================================
+class GraphClassification(nn.Module): 
+    def __init__(self, input_dim, hidden_dim, output_dim, num_gcn_layers, *args, **kwargs):
+        super(GraphClassification, self).__init__(*args, **kwargs)
         
+        # Define multiple GCN layers
+        self.gcn_layers = nn.ModuleList()
+        self.gcn_layers.append(GCNConv(input_dim, hidden_dim))
+        for _ in range(1, num_gcn_layers):
+            self.gcn_layers.append(GCNConv(hidden_dim, hidden_dim))
+            
+        # Define multi-layer perceptron
+        self.mlp = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, output_dim)
+        )
+        
+    # Calculate edge index
+    def forward(self, x, edge_index):
+        pass
+            
