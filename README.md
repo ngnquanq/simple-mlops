@@ -1,7 +1,12 @@
-Simple MLOps
+Enhancing Customer Retention with Explainable AI (XAI) Insights
 ==============================
+This project is my Undergraduate thesis at UEH. "Enhancing Customer Retention with Explainable AI (XAI) Insights" focuses on tackling the challenge of churn prediction. The primary goal is to develop and implement machine learning models that accurately predict which customers are most likely to churn and, more importantly, provide explainable insights into the reasons behind these predictions.
 
-Simple MLOPs project with zenml and automl
+Churn prediction is a critical task for businesses as retaining existing customers is often more cost-effective than acquiring new ones. However, while many predictive models can identify potential churners, they often fail to explain why a customer is likely to leave. This lack of transparency can limit the effectiveness of intervention strategies, as decision-makers may not understand the key drivers behind customer churn.
+
+To address this, the project leverages Explainable AI techniques such as SHAP (SHapley Additive exPlanations) or LIME (Local Interpretable Model-agnostic Explanations). These methods provide interpretable explanations for the predictions made by the churn models, helping businesses identify the specific factors—such as usage patterns, customer demographics, or engagement metrics—that contribute most significantly to churn risk.
+
+By combining predictive power with explainability, this thesis aims to enhance customer retention efforts by enabling businesses to take targeted, informed actions based on clear insights into customer behavior. The project contributes to the field of customer relationship management (CRM) by demonstrating how Explainable AI can be applied to improve both the accuracy and the usability of churn prediction models, ultimately helping businesses reduce churn rates and improve customer satisfaction.
 
 Project Organization
 ------------
@@ -55,3 +60,4 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
