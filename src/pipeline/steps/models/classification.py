@@ -187,4 +187,4 @@ class GraphClassification(nn.Module):
     # Calculate edge index
     def forward(self, x, edge_index):
         pass
-            
+        
